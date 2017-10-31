@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Billable Hours</title>
+    <title>Train Scheduler</title>
 
     <link href="assets/css/reset.css" type="text/css" rel="stylesheet">
 
@@ -30,7 +30,7 @@
     <nav class="navbar navbar-default fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand">Janet Cushing & James Roth</a>
+                <a class="navbar-brand">James Roth</a>
             </div>
         </div>
     </nav>
@@ -39,31 +39,29 @@
 
         <!-- Jumbotron Title -->
         <div class="jumbotron">
-            <h1 class="text-center">Employee Data Management</h1>
-            <h3 class="text-center">A Comprehensive Directory of Employee Billable Hours</h3>
+            <h1 class="text-center">Train Scheduler</h1>
+            <h3 class="text-center">A Train for Any Time</h3>
         </div>
 
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Current Employees</h3>
+                        <h3 class="panel-title">Current Train Schedule</h3>
                     </div>
                     <div class="panel-body">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th scope="col">Employee Name</th>
-                                    <th scope="col">Role</th>
-                                    <th scope="col">Start Date</th>
-                                    <th scope="col">Months Worked</th>
-                                    <th scope="col">Monthly Rate ($)</th>
-                                    <th scope="col">Total Billed ($)</th>
+                                    <th scope="col">Train Name</th>
+                                    <th scope="col">Destination</th>
+                                    <th scope="col">Frequency (min)</th>
+                                    <th scope="col">Next Arrival</th>
+                                    <th scope="col">Minutes Away</th>
                                 </tr>
                             </thead>
-                            <tbody id="currentEmployees">
+                            <tbody id="currentTrains">
                                 <tr>
-                                    <td>Test</td>
                                     <td>Test</td>
                                     <td>Test</td>
                                     <td>Test</td>
@@ -71,7 +69,6 @@
                                     <td>Test</td>
                                 </tr>
                                 <tr>
-                                    <td>Test</td>
                                     <td>Test</td>
                                     <td>Test</td>
                                     <td>Test</td>
@@ -89,27 +86,27 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Add Employee</h3>
+                        <h3 class="panel-title">Add Train</h3>
                     </div>
                     <div class="panel-body">
                         <form>
                             <div class="form-group">
-                                <label for="bidder-name">Employee Name</label>
-                                <input class="form-control" id="employeeName" type="text">
+                                <label for="trainNameInput">Train Name</label>
+                                <input class="form-control" id="trainNameInput" type="text">
                             </div>
                             <div class="form-group">
-                                <label for="bidder-price">Role</label>
-                                <input class="form-control" id="employeeRole" type="text">
+                                <label for="destinationInput">Destination</label>
+                                <input class="form-control" id="destinationInput" type="text">
                             </div>
                             <div class="form-group">
-                                <label for="bidder-name">Start Date (DD/MM/YY - ex: 01/01/99)</label>
-                                <input class="form-control" id="startDateInput" type="text">
+                                <label for="trainTimeInput">First Train Time (HH:mm - military time)</label>
+                                <input class="form-control" id="trainTimeInput" type="text">
                             </div>
                             <div class="form-group">
-                                <label for="bidder-price">Monthly Rate</label>
-                                <input class="form-control" id="monthlyRate" type="number">
+                                <label for="frequencyInput">Frequency (min)</label>
+                                <input class="form-control" id="frequencyInput" type="number">
                             </div>
-                            <button class="btn btn-primary" id="submit-btn" type="submit">Submit</button>
+                            <button class="btn btn-dark" id="submit-btn" type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -120,16 +117,16 @@
 
     <footer class="footer">
         <div class="container">
-            <span class="text-muted">&copy; Copyright 2017 Janet Cushing & James Roth</span>
+            <span class="text-muted">&copy; Copyright 2017 James Roth</span>
         </div>
     </footer>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
     <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-    <script type="text/javascript" src="assets/js/logic.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/logic.js"></script>
 
 </body>
 
