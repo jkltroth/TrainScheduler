@@ -55,7 +55,7 @@ database.ref().on("child_added", function (childSnapshot) {
 
     //Set nextArrival var to trainStartTime.
     let trainStartTime = moment(childSnapshot.val().trainStartTime, "HH:mm").format("HH:mm");
-    console.log(nextArrival);
+    console.log(trainStartTime);
 
     ///Subtract trainStartTime from currentTime, and set to variable "startTimeCurrentTimeDifference"
 
@@ -70,7 +70,7 @@ database.ref().on("child_added", function (childSnapshot) {
         "<tr class='train'><td id='trainName'> " + childSnapshot.val().trainName +
         " </td><td id='destination'> " + childSnapshot.val().destination +
         " </td><td id='frequency'> " + childSnapshot.val().frequency +
-        " </td><td id='nextArrival'> " + nextArrival +
+        " </td><td id='nextArrival'> " + "nextArrival" +
         " </td><td id='minutesAway'> " + "minutesAway" + "</td></tr>");
 
     // Handle the errors
