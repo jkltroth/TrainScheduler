@@ -46,39 +46,34 @@ database.ref().on("child_added", function (childSnapshot) {
     console.log(childSnapshot.val().trainStartTime);
     console.log(childSnapshot.val().frequency);
 
-    // var monthsWorked = moment().diff(moment((childSnapshot.val().startDate), "MM-DD-YYYY"), "months");
-    // var totalBilled = monthsWorked * (childSnapshot.val().rate);
-
     // Set current time to variable
-    var currentTime = moment();
+    let currentTime = moment().format("HH:mm");
+    console.log(currentTime);
+
+    let interval = childSnapshot.val().frequency
+    console.log(interval)
 
     //Set nextArrival var to trainStartTime.
-    var nextArrival = childSnapshot.val().trainStartTime;
+    let trainStartTime = moment(childSnapshot.val().trainStartTime, "HH:mm").format("HH:mm");
+    console.log(nextArrival);
 
-    // While nextArrival < currentTime, then: nextArrival = nextArrival + frequency
-    // Once nextArrival >= currentTime, break from loop. 
+    ///Subtract trainStartTime from currentTime, and set to variable "startTimeCurrentTimeDifference"
 
-    //var minutesAway = minutes from currentTime until nextArrival
+    // Divide "startTimeCurrentTimeDifference" by 'interval', round the result up, and set to variable 'iterations'
 
+    // Mulltiply 'interval' by 'interations', add product to trainStartTime, and set to variable 'nextArrival'
+
+    //var minutesAway = nextArrival minus currentTime
 
     // full list of items to the well
     $("#currentTrains").append(
         "<tr class='train'><td id='trainName'> " + childSnapshot.val().trainName +
         " </td><td id='destination'> " + childSnapshot.val().destination +
         " </td><td id='frequency'> " + childSnapshot.val().frequency +
-        " </td><td id='nextArrival'> " + "nextArrival" +
+        " </td><td id='nextArrival'> " + nextArrival +
         " </td><td id='minutesAway'> " + "minutesAway" + "</td></tr>");
 
     // Handle the errors
 }, function (errorObject) {
     console.log("Errors handled: " + errorObject.code);
 });
-
-// dataRef.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function (snapshot) {
-
-//     // Change the HTML to reflect
-//     $("#name-display").text(snapshot.val().name);
-//     $("#email-display").text(snapshot.val().email);
-//     $("#age-display").text(snapshot.val().age);
-//     $("#comment-display").text(snapshot.val().comment);
-// });
