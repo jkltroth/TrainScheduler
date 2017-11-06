@@ -1,6 +1,3 @@
-// javascript
-
-// functions
 
 // Initialize Firebase
 var config = {
@@ -35,43 +32,49 @@ $('#submit-btn').on('click', function (event) {
         frequency: frequency
     });
 
+    $("input").val('');
 });
 
 // Firebase watcher + initial loader
 database.ref().on("child_added", function (childSnapshot) {
 
     // Log everything that's coming out of snapshot
-    console.log(childSnapshot.val().trainName);
-    console.log(childSnapshot.val().destination);
-    console.log(childSnapshot.val().trainStartTime);
-    console.log(childSnapshot.val().frequency);
+    console.log("Train Name: " + childSnapshot.val().trainName);
+    console.log("Destination: " + childSnapshot.val().destination);
+    console.log("First Train Time: " + childSnapshot.val().trainStartTime);
+    console.log("Frequency: " + childSnapshot.val().frequency);
 
-    // Set current time to variable
-    let currentTime = moment().format("HH:mm");
-    console.log(currentTime);
+    // Set currentTime variable to current unix time
+    let currentTime = moment().unix();
 
-    let interval = childSnapshot.val().frequency
-    console.log(interval)
+    // Convert the train frequency submitted by user to seconds and set to the 'trainIntervalInSeconds" var
+    let trainIntervalInSeconds = childSnapshot.val().frequency * 60;
 
-    //Set nextArrival var to trainStartTime.
-    let trainStartTime = moment(childSnapshot.val().trainStartTime, "HH:mm").format("HH:mm");
-    console.log(trainStartTime);
+    // Convert the train start time submitted by user to unix time and set to trainStartTime var
+    let trainStartTime = moment(childSnapshot.val().trainStartTime, "HH:mm").unix();
 
-    ///Subtract trainStartTime from currentTime, and set to variable "startTimeCurrentTimeDifference"
+    // Subtract trainStartTime from currentTime, and set to variable "startTimeCurrentTimeDifference"
+    let startTimeCurrentTimeDifference = currentTime - trainStartTime;
 
-    // Divide "startTimeCurrentTimeDifference" by 'interval', round the result up, and set to variable 'iterations'
+    // Divide "startTimeCurrentTimeDifference" by 'trainIntervalInSeconds', round the result up, and set to variable 'iterations'
+    let iterations = Math.ceil(startTimeCurrentTimeDifference / trainIntervalInSeconds);
 
-    // Mulltiply 'interval' by 'interations', add product to trainStartTime, and set to variable 'nextArrival'
+    // Multiply 'trainIntervalInSeconds' by 'interations', add product to trainStartTime, and set to variable 'nextArrival'
+    let nextArrival = trainStartTime + (trainIntervalInSeconds * iterations);
+    
+    // Subtract currentTime (unix in seconds) from nextArrival (unix in seconds), multiply by 60 to get to minutes, and set to 'minutesAway' var
+    let minutesAway = Math.ceil((nextArrival - currentTime)/60);
+   
+    // Change format of nextArrival to 'hh:mm AM/PM'
+    nextArrival = moment.unix(nextArrival).format("LT");
 
-    //var minutesAway = nextArrival minus currentTime
-
-    // full list of items to the well
+    // append items to html
     $("#currentTrains").append(
         "<tr class='train'><td id='trainName'> " + childSnapshot.val().trainName +
         " </td><td id='destination'> " + childSnapshot.val().destination +
         " </td><td id='frequency'> " + childSnapshot.val().frequency +
-        " </td><td id='nextArrival'> " + "nextArrival" +
-        " </td><td id='minutesAway'> " + "minutesAway" + "</td></tr>");
+        " </td><td id='nextArrival'> " + nextArrival +
+        " </td><td id='minutesAway'> " + minutesAway + "</td></tr>");
 
     // Handle the errors
 }, function (errorObject) {
